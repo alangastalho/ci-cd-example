@@ -1,8 +1,12 @@
 version: 2.1
+defaults: &defaults
+  working_directory: /tmp/persist_to_workspace
+  machine:
+      image: ubuntu-2004:202010-01
+
 jobs:
   build:
-    machine:
-      image: ubuntu-2004:202010-01
+    <<: *defaults
     steps:
       - checkout
       - run:
@@ -18,43 +22,41 @@ jobs:
             npm install
             npm run build
       - persist_to_workspace:
-          root: .
+          root: /tmp/persist_to_workspace
           paths:
+            - .
           
   test:
-    machine:
-      image: ubuntu-2004:202010-01
+    <<: *defaults
     steps:
       - attach_workspace:
-          at: .
+          at: /tmp/persist_to_workspace
       - run: 
           name: teste de app
           command: |
             cd ./app
             npm run test
       - persist_to_workspace:
-          root: .
+          root: /tmp/persist_to_workspace
           paths:
             - .
 
   horusec:
-    machine:
-       image: ubuntu-2004:202010-01
+    <<: *defaults
     steps:
       - attach_workspace:
-          at: .
-       - run:
+          at: /tmp/persist_to_workspace
+      - run:
           name: Horusec Security Test
           command: |
             curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest
             horusec start -p="./app" --disable-docker="true" --information-severity="true" -log-level="debug"
             
   deploy:
-    machine:
-        image: ubuntu-2004:202010-01
+    <<: *defaults
     steps:
       - attach_workspace:
-          at: .
+          at: /tmp/persist_to_workspace
       - run:
           name: deploy para s3
           command: |
