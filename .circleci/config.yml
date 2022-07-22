@@ -1,6 +1,15 @@
 version: 2.1
 
 jobs:
+  horusec:
+    machine:
+       image: ubuntu-2004:202010-01
+    steps:
+       - run:
+          name: Horusec Security Test
+          command: |
+            curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest
+            horusec start -p="./" --disable-docker="true" --information-severity="true" -log-level="debug    
   build:
     machine:
       image: ubuntu-2004:202010-01
@@ -25,12 +34,7 @@ jobs:
       - attach_workspace:
           at: .
       - run: cd ./app && npm run test
-      - run:
-          name: Horusec Security Test
-          command: |
-            curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest
-            horusec start -p="./" --disable-docker="true" --information-severity="true" -log-level="debug
-            
+      
       - persist_to_workspace:
           root: .
           paths:
