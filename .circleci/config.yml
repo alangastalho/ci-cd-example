@@ -54,4 +54,3 @@ workflows:
       - deploy:
           requires:
             - test
-      - horusec
