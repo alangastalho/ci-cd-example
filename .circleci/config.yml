@@ -49,7 +49,7 @@ jobs:
       - run:
           name: Horusec Security Test
           command: |
-            export HORUSEC_CLI_RETURN_ERROR_IF_FOUND_VULNERABILITY="false"
+            export HORUSEC_CLI_RETURN_ERROR_IF_FOUND_VULNERABILITY="true"
             curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest
             horusec start -p="./app" --disable-docker="true" --information-severity="true" -log-level="debug"
                         
