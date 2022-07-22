@@ -4,4 +4,3 @@ COPY ./package.json ./
 RUN npm install
 COPY ./ ./
 CMD ["npm", "run", "start"]
-CMD ["curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest"]
