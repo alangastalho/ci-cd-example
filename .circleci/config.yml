@@ -51,6 +51,7 @@ jobs:
           command: |
             curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest
             horusec start -p="./app" --disable-docker="true" --information-severity="true" -log-level="debug"
+            exit 1
             
   deploy:
     <<: *defaults
