@@ -29,27 +29,7 @@ jobs:
           root: .
           paths:
             - .
- version: 2.1
-
-executors:
-  horusec-executor:
-    machine:
-      image: ubuntu-1604:202004-01
-
-jobs:
-  horusec:
-    executor: horusec-executor
-    steps:
-      - checkout
-      - run:
-          name: Horusec Security Test
-          command: |
-            curl -fsSL https://horusec.io/bin/install.sh | bash
-            horusec start -p="./" -e="true"
-workflows:
-  pipeline:
-    jobs:
-      - horusec          
+            
   deploy:
     machine:
         image: ubuntu-2004:202010-01
