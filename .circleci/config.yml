@@ -51,7 +51,7 @@ jobs:
           command: |
             export HORUSEC_CLI_RETURN_ERROR_IF_FOUND_VULNERABILITY="true"
             curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest
-            horusec start -p="./app" --disable-docker="true" --information-severity="true" -log-level="debug"
+            horusec start -p="./app" --information-severity="true" -log-level="debug"
                         
   deploy:
     <<: *defaults
