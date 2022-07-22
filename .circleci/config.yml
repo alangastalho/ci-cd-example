@@ -1,5 +1,5 @@
 version: 2.1
-
+jobs:
   build:
     machine:
       image: ubuntu-2004:202010-01
@@ -17,7 +17,6 @@ version: 2.1
           root: .
           paths:
           
-  jobs:
   horusec:
     machine:
        image: ubuntu-2004:202010-01
