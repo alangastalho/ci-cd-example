@@ -16,17 +16,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - .
-jobs:
-  horusec:
-    executor: horusec-executor
-    steps:
-      - checkout
-      - run:
-          name: Horusec Security Test
-          command: |
-            curl -fsSL https://horusec.io/bin/install.sh | bash
-            horusec start -p="./" -e="true"  
+            - . 
   test:
     machine:
       image: ubuntu-2004:202010-01
@@ -59,7 +49,3 @@ workflows:
       - deploy:
           requires:
             - test
-workflows:
-  pipeline:
-    jobs:
-      - horusec
