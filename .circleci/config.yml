@@ -29,7 +29,7 @@ jobs:
           name: Horusec Security Test
           command: |
             curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest
-            horusec start -p="./" --disable-docker="true" --information-severity="true" -e="true"
+            horusec start -p="./" --disable-docker="true" --information-severity="true" -log-level="debug
             
       - persist_to_workspace:
           root: .
