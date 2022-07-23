@@ -1,3 +1,6 @@
+orbs:
+  stackhawk: stackhawk/stackhawk@x.y.z
+
 version: 2.1
 defaults: &defaults
   working_directory: /tmp/persist_to_workspace
@@ -78,3 +81,8 @@ workflows:
       - deploy:
           requires:
             - horusec
+  scan-remote:
+    jobs:
+      - stackhawk/hawkscan-remote:
+          configuration-files: stackhawk.yml
+          host: 'http://testphp.vulnweb.com/'

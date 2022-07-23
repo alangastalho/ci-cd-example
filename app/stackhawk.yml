@@ -1,0 +1,8 @@
+app:
+  host: http://testphp.vulnweb.com/
+  env: Development
+
+hawk:
+  startupTimeoutMinutes: 1
+  spider:
+    base: false
