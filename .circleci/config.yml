@@ -1,8 +1,8 @@
 version: 2.1
 
 orbs:
-  stackhawk: stackhawk/stackhawk@x.y.z
-  
+  stackhawk: stackhawk/stackhawk@1.0.5
+
 defaults: &defaults
   working_directory: /tmp/persist_to_workspace
   machine:
