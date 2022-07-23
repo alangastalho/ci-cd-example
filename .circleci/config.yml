@@ -28,8 +28,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/persist_to_workspace
           paths:
-            - .
-          
+            - .         
   test:
     <<: *defaults
     steps:
