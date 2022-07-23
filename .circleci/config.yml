@@ -41,19 +41,6 @@ jobs:
           paths:
             - .
 
-  trivy:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: /tmp/persist_to_workspace
-      - run:
-          name: Analise Trivy Docker 
-          command: | 
-            wget https://github.com/aquasecurity/trivy/releases/download/v0.30.2/trivy_0.30.2_Linux-64bit.deb
-            sudo dpkg -i trivy_0.30.2_Linux-64bit.deb
-            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/Library/Caches:/root/.cache/ aquasec/trivy:0.18.3 ubuntu-2004:202010-01
-
-
   horusec:
     <<: *defaults
     steps:
@@ -84,13 +71,10 @@ workflows:
       - build
       - test:
           requires:
-            - build
-      - trivy:
-          requires:
-            - test      
+            - build    
       - horusec:
           requires:
-            - trivy
+            - test
       - deploy:
           requires:
             - horusec
