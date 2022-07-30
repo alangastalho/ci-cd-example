@@ -21,11 +21,7 @@ jobs:
           command: |
             cd ./app
             npm install
-            npm run build      
-      - run:
-          name: Build image
-          command: | 
-          docker build -t trivy-ci-test:${CIRCLE_SHA1} .
+            npm run build
       - run:
           name: Install trivy
           command: |
@@ -36,7 +32,7 @@ jobs:
            sudo apt-get install trivy
       - run:
           name: Scan the local image
-          command: trivy --exit-code 0 --no-progress ubuntu-2004:202010-01:${CIRCLE_SHA1}         
+          command: trivy --exit-code 0 --no-progress ubuntu-2004:202010-01      
       - persist_to_workspace:
           root: /tmp/persist_to_workspace
           paths:
