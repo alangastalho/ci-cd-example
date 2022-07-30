@@ -54,7 +54,6 @@ jobs:
           command: |
             export HORUSEC_CLI_RETURN_ERROR_IF_FOUND_VULNERABILITY="false"
             export HORUSEC_CLI_ENABLE_OWASP_DEPENDENCY_CHECK="true"
-            export HORUSEC_CLI_ENABLE_SHELLCHECK="true"
             curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest
             horusec start -p="./app" --information-severity="false" -log-level="debug"
                         
