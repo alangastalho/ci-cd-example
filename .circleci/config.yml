@@ -22,6 +22,14 @@ jobs:
             cd ./app
             npm install
             npm run build
+      - run:
+          name: Install trivy
+          command: |
+            apk add --update-cache --upgrade --update curl
+            curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+      - run:
+          name: Scan the local image
+          command: trivy --exit-code 0 --no-progress trivy-ci-test:${CIRCLE_SHA1}         
       - persist_to_workspace:
           root: /tmp/persist_to_workspace
           paths:
