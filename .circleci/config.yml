@@ -3,16 +3,13 @@ version: 2.1
 orbs: 
   trivy: signavio/trivy@1.3.0
 
-description: Docker image vulnerability scans with trivy
-
-executors:
-  default:
-    description: "Container to run the steps in"
-    parameters:
-      image:
-        type: string
-        default: ubuntu-2004:202111-02
-    machine:
+defaults: &defaults
+  working_directory: /tmp/persist_to_workspace
+  parameters:
+    image:
+      type: string
+      default: ubuntu-2004:202010-01
+  machine:
       image: <<parameters.image>>
 
 commands:
@@ -163,3 +160,80 @@ commands:
           path: <<parameters.output-folder-path>>
       - store_artifacts:
           path: <<parameters.output-folder-path>>
+
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Installing AWS CLI
+          command: |
+            sudo apt-get update
+            sudo apt install python3-pip
+            sudo pip3 install awsebcli --upgrade
+      - run: 
+          name: build app
+          command: |
+            cd ./app
+            npm install
+            npm run build
+      - run:
+          name: Install trivy
+          command: |
+            docker run aquasec/trivy image /tmp/persist_to_workspace
+      - persist_to_workspace:
+          root: /tmp/persist_to_workspace
+          paths:
+            - .         
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: /tmp/persist_to_workspace
+      - run: 
+          name: teste de app
+          command: |
+            cd ./app
+            npm run test
+      - persist_to_workspace:
+          root: /tmp/persist_to_workspace
+          paths:
+            - .
+
+  horusec:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: /tmp/persist_to_workspace
+      - run:
+          name: Horusec Security Test
+          command: |
+            export HORUSEC_CLI_RETURN_ERROR_IF_FOUND_VULNERABILITY="false"
+            export HORUSEC_CLI_ENABLE_OWASP_DEPENDENCY_CHECK="true"
+            curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest
+            horusec start -p="./app" --information-severity="false" -log-level="debug"
+                        
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: /tmp/persist_to_workspace
+      - run:
+          name: deploy para s3
+          command: |
+           aws s3 sync ./app/build s3://cicd-exemplo
+
+workflows:
+  build_test_deploy:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build    
+      - horusec:
+          requires:
+            - test
+      - deploy:
+          requires:
+            - horusec
