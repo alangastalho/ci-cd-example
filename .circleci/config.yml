@@ -30,9 +30,10 @@ jobs:
            echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
            sudo apt-get update
            sudo apt-get install trivy
+           chmod 777 /var/run/docker.socks
       - run:
           name: Scan the local image
-          command: trivy image ubuntu-2004:202010-01
+          command: sudo trivy image ubuntu-2004:202010-01
       - persist_to_workspace:
           root: /tmp/persist_to_workspace
           paths:
