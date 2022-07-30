@@ -178,10 +178,10 @@ jobs:
             cd ./app
             npm install
             npm run build
-      - run:
-          name: Install trivy
-          command: |
-            docker run aquasec/trivy image /tmp/persist_to_workspace
+#      - run:
+#          name: Install trivy
+#          command: |
+#            docker run aquasec/trivy image /tmp/persist_to_workspace
       - persist_to_workspace:
           root: /tmp/persist_to_workspace
           paths:
