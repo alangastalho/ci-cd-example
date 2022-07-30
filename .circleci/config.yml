@@ -25,7 +25,7 @@ jobs:
       - run:
           name: Install trivy
           command: |
-            docker run aquasec/trivy image python:3.4-alpine
+            docker run aquasec/trivy image ubuntu-2004:202010-01
       - persist_to_workspace:
           root: /tmp/persist_to_workspace
           paths:
