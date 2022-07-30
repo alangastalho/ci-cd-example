@@ -23,19 +23,9 @@ jobs:
             npm install
             npm run build
       - run:
-          name: Build image trivy
-          command: docker build -t trivy-ci-test:${CIRCLE_SHA1} .
-      - run:
           name: Install trivy
           command: |
-           sudo apt-get install wget apt-transport-https gnupg lsb-release
-           wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
-           echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
-           sudo apt-get update
-           sudo apt-get install trivy
-      - run:
-          name: Scan the local image
-          command: sudo trivy ubuntu-2004:202010-01
+            docker run aquasec/trivy image python:3.4-alpine
       - persist_to_workspace:
           root: /tmp/persist_to_workspace
           paths:
