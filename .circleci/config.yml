@@ -74,11 +74,12 @@ jobs:
             pwd
             ls
             cd ./app
+            ls
 
       - snyk/scan:
           fail-on-issues: false
           monitor-on-build: true
-          project: '${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}-app'      
+          target-file: Dockerfile      
             
   deploy:
     <<: *defaults
