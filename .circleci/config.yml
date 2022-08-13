@@ -96,7 +96,7 @@ workflows:
       - horusec:
           requires:
             - test
-      - synk: 
+      - snyk: 
           requires:
             - horusec      
       - deploy:
