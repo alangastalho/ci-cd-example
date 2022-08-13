@@ -89,10 +89,7 @@ workflows:
             - build    
       - horusec:
           requires:
-            - test
-      - snyk: 
-          requires:
-            - horusec      
+            - test     
       - deploy:
           requires:
-            - snyk
+            - horusec
