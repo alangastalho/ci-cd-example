@@ -73,8 +73,12 @@ jobs:
           at: /tmp/persist_to_workspace
       - run: 
           name: Analise Snyk
-          command: |
-           snyk/scan
+      - snyk/scan:
+        token-variable: CICD_SNYK_TOKEN  
+        fail-on-issues: false  
+        monitor-on-build: true   
+        project: ${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}-app
+        organization: ${SNYK_CICD_ORGANIZATION}
             
   deploy:
     <<: *defaults
