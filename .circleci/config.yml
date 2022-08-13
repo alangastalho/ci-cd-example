@@ -73,6 +73,7 @@ jobs:
           command: |
             pwd
             ls
+            cd ./app
 
       - snyk/scan:
           fail-on-issues: false
