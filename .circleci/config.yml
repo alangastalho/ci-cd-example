@@ -34,6 +34,10 @@ jobs:
           name: trivy
           command: |
             docker image list
+      
+      - snyk/scan:
+          token-variable: SNYK_TOKEN
+
       - persist_to_workspace:
           root: /tmp/persist_to_workspace
           paths:
@@ -65,16 +69,6 @@ jobs:
             export HORUSEC_CLI_ENABLE_OWASP_DEPENDENCY_CHECK="true"
             curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest
             horusec start -p="./app" --information-severity="false" -log-level="debug"
-
-  snyk:
-    <<: *defaults
-    steps:   
-      - attach_workspace:
-          at: /tmp/persist_to_workspace
-      - run: 
-          name: Analise Snyk
-          command: |
-           snyk/scan ./app
             
   deploy:
     <<: *defaults
