@@ -31,12 +31,6 @@ jobs:
             npm install
             npm run build
 
-      - snyk/scan:
-          target-file: ./app
-          fail-on-issues: false
-          monitor-on-build: true
-          project: '${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}-app'
-
       - run:
           name: trivy
           command: |
@@ -73,6 +67,10 @@ jobs:
             export HORUSEC_CLI_ENABLE_OWASP_DEPENDENCY_CHECK="true"
             curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest
             horusec start -p="./app" --information-severity="false" -log-level="debug"
+      - snyk/scan:
+          fail-on-issues: false
+          monitor-on-build: true
+          project: '${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}-app'      
             
   deploy:
     <<: *defaults
