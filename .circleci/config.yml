@@ -101,4 +101,4 @@ workflows:
             - horusec      
       - deploy:
           requires:
-            - synk
+            - snyk
