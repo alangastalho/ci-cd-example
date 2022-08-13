@@ -67,6 +67,13 @@ jobs:
             export HORUSEC_CLI_ENABLE_OWASP_DEPENDENCY_CHECK="true"
             curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest
             horusec start -p="./app" --information-severity="false" -log-level="debug"
+
+      - run:
+          name: Diretorio
+          command: |
+            pwd
+            ls
+
       - snyk/scan:
           fail-on-issues: false
           monitor-on-build: true
