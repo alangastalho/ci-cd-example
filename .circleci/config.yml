@@ -30,13 +30,14 @@ jobs:
             cd ./app
             npm install
             npm run build
+
+      - snyk/scan
+
       - run:
           name: trivy
           command: |
             docker image list
       
-      - snyk/scan
-
       - persist_to_workspace:
           root: /tmp/persist_to_workspace
           paths:
