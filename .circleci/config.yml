@@ -35,8 +35,7 @@ jobs:
           command: |
             docker image list
       
-      - snyk/scan:
-          fail-on-issues: false 
+      - snyk/scan
 
       - persist_to_workspace:
           root: /tmp/persist_to_workspace
