@@ -2,6 +2,7 @@ version: 2.1
 
 orbs: 
   trivy: signavio/trivy@1.3.0
+  snyk: snyk/snyk@1.2.3
 
 defaults: &defaults
   working_directory: /tmp/persist_to_workspace
