@@ -36,7 +36,6 @@ jobs:
             docker image list
       
       - snyk/scan:
-          token-variable: SNYK_TOKEN
           fail-on-issues: false 
 
       - persist_to_workspace:
