@@ -30,14 +30,12 @@ jobs:
             cd ./app
             npm install
             npm run build
-      - run: 
-          name: snyk
-          command: |
-          snyk ./app
-      #- snyk/scan:
-      #    fail-on-issues: false
-      #    monitor-on-build: true
-      #    project: '${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}-app'
+
+      - snyk/scan:
+          target-file: ./app
+          fail-on-issues: false
+          monitor-on-build: true
+          project: '${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}-app'
 
       - run:
           name: trivy
