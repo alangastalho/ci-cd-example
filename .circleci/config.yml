@@ -59,7 +59,13 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: /tmp/persist_to_workspace
+          at: /tmp/persist_to_workspace/app
+
+      - snyk/scan:
+          fail-on-issues: false
+          monitor-on-build: true
+          target-file: Dockerfile  
+
       - run:
           name: Horusec Security Test
           command: |
@@ -74,13 +80,7 @@ jobs:
             pwd
             ls
             cd ./app
-            ls
-
-      - snyk/scan:
-          command: cd ./app
-          fail-on-issues: false
-          monitor-on-build: true
-          target-file: Dockerfile      
+            ls    
             
   deploy:
     <<: *defaults
