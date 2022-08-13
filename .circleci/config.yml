@@ -71,7 +71,10 @@ jobs:
     steps:   
       - attach_workspace:
           at: /tmp/persist_to_workspace
-      - run: - snyk/scan
+      - run: 
+          name: Analise Snyk
+          command: |
+           snyk/scan
             
   deploy:
     <<: *defaults
